@@ -116,3 +116,40 @@ def check_tournament_rule(graph):
     if count == 0:
         return 1
     return 0
+
+def find_hamiltonian_path(graph):
+    if check_tournament_rule(graph) == 0:
+        return "Not A Tournament"
+    index = 1
+    max_count = 0
+    max_index = 1
+    for node3 in graph:
+        if len(graph[node3]) > max_count:
+            max_count = len(graph[node3])
+            max_index = index
+        index = index + 1
+    index = 1
+    index2 = 1
+    min_count = len(graph)
+    min_index = 1
+    for node4 in graph:
+        if index == max_index:
+            for node5 in graph[node4]:
+               if len(graph[node5]) < min_count:
+                   min_count = len(graph[node5])
+                   min_index = index2 
+               index2 = index2 + 1
+        index = index + 1
+    index = 1
+    index2 = 1
+    for node1 in graph:
+        if index == max_index:
+            for node2 in graph[node1]:
+                if index2 == min_index:
+                    path = find_longest_path(graph, node1, node2)
+                    if len(path) == len(graph):
+                        return path
+                index2 = index2 + 1
+        index = index + 1
+
+print(find_hamiltonian_path(results))
