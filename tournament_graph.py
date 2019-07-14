@@ -97,3 +97,22 @@ def find_longest_path(graph, start, end, path=[]):
                 if not longest or len(newpath) > len(longest):
                     longest = newpath
     return longest
+
+def check_tournament_rule(graph):
+    count = len(graph)*(len(graph) - 1)/2
+    for node1 in graph:
+        for node2 in graph[node1]:
+            count = count - 1
+            if node2 in graph:
+                for node3 in graph[node2]:
+                    if node3 == node1:
+                        return 0
+            n = 0
+            for node4 in graph[node1]:
+                if node2 == node4:
+                    n = n + 1
+                    if n == 2:
+                        return 0
+    if count == 0:
+        return 1
+    return 0
