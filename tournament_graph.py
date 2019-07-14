@@ -152,4 +152,28 @@ def find_hamiltonian_path(graph):
                 index2 = index2 + 1
         index = index + 1
 
-print(find_hamiltonian_path(results))
+def prove_hamiltonian_path():
+    return "This can be proven using strong induction. Let n be the number of vertices. When n≤2, a hamiltonian path clearly exists. Now, for any given n>2, pick any arbitrary vertex v. Partition all other vertices other than v into the sets V(out) and V(in). V(out) contains all other vertices u such that the edge (v,u) exists, while V(in) contains all other vertices u such that the edge (u,v) exists. Clearly |V(out)|<n and |V(in)|<n, so by the inductive hypothesis, there is a hamiltonian path in both sets. Let H(out) be any hamiltonian path in V(out) and H(in) be any hamiltonian path in V(in). You can then form a hamiltonian path for all vertices by concatenating H(in), v, and H(out)."
+
+def find_hamiltonian_path2(graph, area):
+	if check_tournament_rule(graph) == 0:
+        return "Not A Tournament"
+    if area == []:
+        return []
+    n = 1
+    s_node = 0
+    a_area = []
+    b_area = []
+    for node in area:
+        if n == 1:
+            s_node = node
+            for node2 in graph[node]:
+            	if node2 in area:
+            		a_area.append(node2)
+        if not n == 1:
+        	if node not in a_area:
+        		b_area.append(node)
+        n = n + 1
+    return find_hamiltonian_path2(graph, b_area) + [s_node] + find_hamiltonian_path2(graph, a_area)
+
+print(find_hamiltonian_path2(results, results))
